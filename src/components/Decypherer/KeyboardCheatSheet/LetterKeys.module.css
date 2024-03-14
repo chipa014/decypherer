@@ -1,0 +1,61 @@
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: var(--color-background);
+
+  --shadow: 0 0 1rem var(--color-neon-blue-shadow);
+  border: 3px solid var(--color-neon-blue);
+  box-shadow: var(--shadow), inset var(--shadow);
+
+  --keyboard-border-radius: 2rem;
+  border-radius: var(--keyboard-border-radius);
+  padding: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  transition: all 0.5s;
+}
+
+.key {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+
+  width: 8rem;
+  height: 8rem;
+
+  background-color: transparent;
+  --shadow: 0 0 1.5rem var(--color-neon-blue-shadow);
+  border: 3px solid var(--color-neon-blue);
+  box-shadow: var(--shadow), inset var(--shadow);
+  border-radius: 1rem;
+  color: var(--color-neon-blue-bright);
+
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:focus-visible,
+  &:hover {
+    outline: none;
+    --shadow: 0 0 2rem var(--color-neon-blue-shadow);
+    transform: scale(1.1);
+  }
+}
+
+*:has(.key:focus-visible) > .key:not(:focus-visible),
+*:has(.key:hover) > .key:not(:hover) {
+  transform: scale(0.95);
+  --shadow: 0 0 1rem var(--color-neon-blue-shadow);
+}
+
+.letter {
+  font-size: 3.5rem;
+}

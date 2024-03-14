@@ -1,0 +1,48 @@
+.container {
+  height: 8rem;
+  width: 8rem;
+
+  border: 3px solid black;
+  border-radius: 1.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: transparent;
+
+  box-shadow: none;
+  transition: all 0.2s;
+
+  &.blue,
+  &.green,
+  &.red {
+    --shadow: 0 0 1.5rem var(--neon-shadow);
+    border-color: var(--neon);
+    box-shadow: var(--shadow), inset var(--shadow);
+
+    color: var(--neon-bright);
+  }
+
+  &.blue {
+    --neon: var(--color-neon-blue);
+    --neon-bright: var(--color-neon-blue-bright);
+    --neon-shadow: var(--color-neon-blue-shadow);
+  }
+
+  &.green {
+    --neon: var(--color-neon-green);
+    --neon-bright: var(--color-neon-green-bright);
+    --neon-shadow: var(--color-neon-green-shadow);
+  }
+
+  &.red {
+    --neon: var(--color-neon-red);
+    --neon-bright: var(--color-neon-red-bright);
+    --neon-shadow: var(--color-neon-red-shadow);
+  }
+}
+
+.letter {
+  font-size: 3.5rem;
+}

@@ -1,0 +1,32 @@
+.keyboard {
+  --shadow: 0 0 1rem var(--color-neon-blue-shadow);
+  border: 3px solid var(--color-neon-blue);
+  box-shadow: var(--shadow), inset var(--shadow);
+
+  --keyboard-border-radius: 2rem;
+  border-radius: var(--keyboard-border-radius);
+  padding: 3rem;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+  position: relative;
+
+  /* 
+  width: 50rem;
+  height: 40rem; */
+
+  transition: all 0.5s;
+}
+
+.veil {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-color: var(--color-veil);
+  border-radius: var(--keyboard-border-radius);
+}

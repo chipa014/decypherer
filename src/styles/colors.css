@@ -1,0 +1,17 @@
+body {
+  --color-neon-blue-bright: #cdf3ff;
+  --color-neon-blue: #98e4ff;
+  --color-neon-blue-shadow: #98e4ff55;
+
+  --color-neon-green-bright: #cbffdd;
+  --color-neon-green: #94ffb8;
+  --color-neon-green-shadow: #94ffb855;
+
+  --color-neon-red-bright: #ffd3cb;
+  --color-neon-red: #ffa594;
+  --color-neon-red-shadow: #ffa59455;
+
+  --color-background: #141414;
+
+  --color-veil: #000000cc;
+}
