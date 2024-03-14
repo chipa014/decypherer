@@ -25,9 +25,9 @@ const Keyboard: React.FC = function () {
     dispatchCustomInputEvent(letter.toLowerCase());
   };
 
-  const closeSubKeyboardHandler = () => {
-    setSubKeyboardOpened(false);
-  };
+  // const closeSubKeyboardHandler = () => {
+  //   setSubKeyboardOpened(false);
+  // };
 
   return (
     <div className={b(styles, "keyboard")}>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import Question from "src/components/Decypherer/Question/Question";
 import Keyboard from "src/components/Decypherer/KeyboardCheatSheet/Keyboard";
@@ -16,9 +16,9 @@ const App: React.FC = () => {
     return decyphererWords[wordIndex];
   }, []);
 
-  const onShowModal = function () {
+  const onShowModal = useCallback(function () {
     setShowModal(true);
-  };
+  }, []);
 
   const onHideModal = function () {
     setShowModal(false);

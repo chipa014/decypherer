@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 // import { decyphererWords } from "src/consts/decypherer-words";
 import QuestionLetter from "src/components/Decypherer/Question/QuestionLetter";
@@ -20,24 +20,31 @@ interface IQuestionProps {
 const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
   const [currentGuess, setCurrentGuess] = useState("");
 
-  const digits = word.split("").map((letter) => {
-    if (!/^[A-Za-zА-Яа-я]$/.test(letter)) {
-      return null;
-    }
+  const digits = useMemo(
+    () =>
+      word.split("").map((letter) => {
+        if (!/^[A-Za-zА-Яа-я]$/.test(letter)) {
+          return null;
+        }
 
-    return lettersToDigits[letter.toLowerCase()];
-  });
+        return lettersToDigits[letter.toLowerCase()];
+      }),
+    [word]
+  );
 
-  const checkGuess = function (guess: string) {
-    if (guess === word) {
-      onSuccess();
-      return "";
-    }
+  const checkGuess = useCallback(
+    function (guess: string) {
+      if (guess === word) {
+        onSuccess();
+        return "";
+      }
 
-    return guess;
-  };
+      return guess;
+    },
+    [word, onSuccess]
+  );
 
-  const backspaceInputHandler = function () {
+  const backspaceInputHandler = useCallback(function () {
     setCurrentGuess((prevGuess) => {
       if (!prevGuess) {
         return prevGuess;
@@ -45,24 +52,27 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
 
       return prevGuess.slice(0, -1);
     });
-  };
+  }, []);
 
-  const letterInputHandler = function (key: string) {
-    setCurrentGuess((prevGuess) => {
-      const newGuess = prevGuess + key.toLowerCase();
-      if (newGuess.length > word.length) {
-        return prevGuess;
-      }
+  const letterInputHandler = useCallback(
+    function (key: string) {
+      setCurrentGuess((prevGuess) => {
+        const newGuess = prevGuess + key.toLowerCase();
+        if (newGuess.length > word.length) {
+          return prevGuess;
+        }
 
-      if (newGuess.length === word.length) {
-        checkGuess(newGuess);
-      }
+        if (newGuess.length === word.length) {
+          checkGuess(newGuess);
+        }
 
-      return newGuess;
-    });
-  };
+        return newGuess;
+      });
+    },
+    [checkGuess, word]
+  );
 
-  const keyDownHandler = function (event: KeyboardEvent) {
+  const keyDownHandler = useCallback(function (event: KeyboardEvent) {
     const key = event.key.toLowerCase();
 
     if (key !== "backspace" && !oneLetterRegexp.test(key)) {
@@ -70,25 +80,28 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
     }
 
     dispatchCustomInputEvent(key.toLowerCase());
-  };
+  }, []);
 
-  const customInputHandler = function (event: Event) {
-    if (!isCustomEvent(event)) {
-      throw new Error(
-        "customInputEvent is not of type CustomEvent: no event.detail payload"
-      );
-    } //A clutch to get typesafe customEvent in addEventListener
+  const customInputHandler = useCallback(
+    function (event: Event) {
+      if (!isCustomEvent(event)) {
+        throw new Error(
+          "customInputEvent is not of type CustomEvent: no event.detail payload"
+        );
+      } //A clutch to get typesafe customEvent in addEventListener
 
-    const { input } = event.detail;
+      const { input } = event.detail;
 
-    if (input === "backspace") {
-      backspaceInputHandler();
+      if (input === "backspace") {
+        backspaceInputHandler();
 
-      return;
-    }
+        return;
+      }
 
-    letterInputHandler(input);
-  };
+      letterInputHandler(input);
+    },
+    [backspaceInputHandler, letterInputHandler]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", keyDownHandler);
@@ -98,7 +111,7 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
       document.removeEventListener("keydown", keyDownHandler);
       document.removeEventListener("customInput", customInputHandler);
     };
-  }, []);
+  }, [keyDownHandler, customInputHandler]);
 
   return (
     <div className={styles.container}>
