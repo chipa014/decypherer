@@ -1,16 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-// import { decyphererWords } from "src/consts/decypherer-words";
 import QuestionLetter from "src/components/Decypherer/Question/QuestionLetter";
-// import { useSelectRandom } from "src/hooks/useSelectRandom";
 
-import styles from "./Question.module.css";
 import { lettersToDigits } from "src/consts/letter-digits";
 import { oneLetterRegexp } from "src/consts/regexp";
 import {
   dispatchCustomInputEvent,
   isCustomEvent,
 } from "src/utils/customEvents";
+import styles from "./Question.module.css";
 
 interface IQuestionProps {
   word: string;

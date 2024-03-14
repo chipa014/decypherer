@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from "react";
 
 import Question from "src/components/Decypherer/Question/Question";
-import Keyboard from "src/components/Decypherer/KeyboardCheatSheet/Keyboard";
+import Keyboard from "src/components/Decypherer/Keyboard/Keyboard";
+import VictoryModal from "src/components/Decypherer/VictoryModal/VictoryModal";
 
+import { decyphererWords } from "src/consts/decypherer-words";
 import styles from "./App.module.css";
-import VictoryModal from "./components/Decypherer/VictoryModal/VictoryModal";
-import { decyphererWords } from "./consts/decypherer-words";
 
 const App: React.FC = () => {
   const [showModal, setShowModal] = useState(false);

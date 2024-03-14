@@ -1,12 +1,15 @@
 import b from "src/utils/b";
-import styles from "./LetterKeys.module.css";
+import styles from "./SubKeyboard.module.css";
 
-interface IKeyProps {
+interface ISubKeyboardProps {
   letters: string[];
   onClick: (letter: string) => void;
 }
 
-const LetterKeys: React.FC<IKeyProps> = function ({ letters, onClick }) {
+const SubKeyboard: React.FC<ISubKeyboardProps> = function ({
+  letters,
+  onClick,
+}) {
   return (
     <div className={styles.container}>
       {letters.map((letter) => (
@@ -22,4 +25,4 @@ const LetterKeys: React.FC<IKeyProps> = function ({ letters, onClick }) {
   );
 };
 
-export default LetterKeys;
+export default SubKeyboard;

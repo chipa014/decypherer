@@ -1,12 +1,13 @@
 import { useState } from "react";
 
-import Key from "./Key";
+import Key from "src/components/Decypherer/Keyboard/Key";
+import SubKeyboard from "src/components/Decypherer/Keyboard/SubKeyboard";
+
 import { digitsToLetters } from "src/consts/letter-digits";
 import b from "src/utils/b";
+import { dispatchCustomInputEvent } from "src/utils/customEvents";
 
 import styles from "./Keyboard.module.css";
-import LetterKeys from "./LetterKeys";
-import { dispatchCustomInputEvent } from "src/utils/customEvents";
 
 const numbers = [...Array(9).keys()];
 
@@ -44,7 +45,7 @@ const Keyboard: React.FC = function () {
       })}
       {subKeyboardOpened && <div className={styles.veil} />}
       {subKeyboardOpened && (
-        <LetterKeys
+        <SubKeyboard
           letters={digitsToLetters[selectedDigit - 1]}
           onClick={letterKeyClickHandler}
         />
