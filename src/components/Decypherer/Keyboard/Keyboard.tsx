@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Key from "src/components/Decypherer/Keyboard/Key";
+import Key, { BackspaceKey } from "src/components/Decypherer/Keyboard/Key";
 import SubKeyboard from "src/components/Decypherer/Keyboard/SubKeyboard";
 
 import { digitsToLetters } from "src/consts/letter-digits";
@@ -26,9 +26,13 @@ const Keyboard: React.FC = function () {
     dispatchCustomInputEvent(letter.toLowerCase());
   };
 
-  // const closeSubKeyboardHandler = () => {
-  //   setSubKeyboardOpened(false);
-  // };
+  const backspaceClickHandler = () => {
+    dispatchCustomInputEvent("backspace");
+  };
+
+  const closeSubKeyboardHandler = () => {
+    setSubKeyboardOpened(false);
+  };
 
   return (
     <div className={b(styles, "keyboard")}>
@@ -43,11 +47,15 @@ const Keyboard: React.FC = function () {
           ></Key>
         );
       })}
-      {subKeyboardOpened && <div className={styles.veil} />}
+      <BackspaceKey onClick={backspaceClickHandler} />
+      {subKeyboardOpened && (
+        <div className={styles.veil} onClick={closeSubKeyboardHandler} />
+      )}
       {subKeyboardOpened && (
         <SubKeyboard
           letters={digitsToLetters[selectedDigit - 1]}
           onClick={letterKeyClickHandler}
+          onClose={closeSubKeyboardHandler}
         />
       )}
     </div>

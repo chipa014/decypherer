@@ -1,9 +1,13 @@
 .modal {
   height: 400px;
   width: 500px;
-  border: 2px solid white;
+
   border-radius: 2rem;
   background-color: var(--color-background);
+  --shadow: 0 0 1.5rem var(--color-neon-green-shadow);
+  border: 3px solid var(--color-neon-green);
+  box-shadow: var(--shadow), inset var(--shadow);
+  color: var(--color-neon-green-bright);
 
   position: fixed;
   top: 50%;

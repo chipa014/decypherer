@@ -1,0 +1,33 @@
+.button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  --transform-default: translate(50%, -50%);
+  transform: var(--transform-default);
+
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--color-background);
+  --shadow: 0 0 1.5rem var(--color-neon-red-shadow);
+  border: 3px solid var(--color-neon-red);
+  box-shadow: var(--shadow), inset var(--shadow);
+  border-radius: 100%;
+  color: var(--color-neon-red-bright);
+
+  font-size: 2.5rem;
+
+  cursor: pointer;
+  outline: none;
+
+  transition: all 0.2s;
+
+  &:hover,
+  &:focus-visible {
+    transform: var(--transform-default) scale(1.15);
+    --shadow: 0 0 2rem var(--color-neon-red-shadow);
+  }
+}

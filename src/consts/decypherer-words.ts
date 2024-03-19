@@ -7,7 +7,7 @@ export const decyphererWords = [
   "judoon",
   "pting",
   "racnoss",
-  "stenze",
+  "stenza",
   "silence",
   "zygon",
 ];
