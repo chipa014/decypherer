@@ -4,6 +4,31 @@
   gap: 1rem;
 }
 
+.wrong-answer {
+  animation: wrong-answer 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
 .space {
   width: 2rem;
+}
+
+@keyframes wrong-answer {
+  0% {
+    transform: translateX(0);
+  }
+  12.5% {
+    transform: translateX(0.8rem);
+  }
+  37.5% {
+    transform: translateX(-1.2rem);
+  }
+  62.5% {
+    transform: translateX(1.2rem);
+  }
+  87.5% {
+    transform: translateX(-0.8rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }

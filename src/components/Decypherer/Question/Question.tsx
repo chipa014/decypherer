@@ -4,6 +4,7 @@ import QuestionLetter from "src/components/Decypherer/Question/QuestionLetter";
 
 import { lettersToDigits } from "src/consts/letter-digits";
 import { oneLetterRegexp } from "src/consts/regexp";
+import b from "src/utils/b";
 import {
   dispatchCustomInputEvent,
   isCustomEvent,
@@ -17,6 +18,9 @@ interface IQuestionProps {
 
 const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
   const [currentGuess, setCurrentGuess] = useState("");
+  const [guessStatus, setGuessStatus] = useState<
+    "none" | "success" | "failure"
+  >("none");
 
   const digits = useMemo(
     () =>
@@ -34,10 +38,15 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
     function (guess: string) {
       if (guess === word) {
         onSuccess();
-        return "";
+        setGuessStatus("success");
+        document.removeEventListener("keydown", keyDownHandler);
+        document.removeEventListener("customInput", customInputHandler);
+        return;
       }
 
-      return guess;
+      setGuessStatus("failure");
+
+      return;
     },
     [word, onSuccess]
   );
@@ -46,6 +55,10 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
     setCurrentGuess((prevGuess) => {
       if (!prevGuess) {
         return prevGuess;
+      }
+
+      if (prevGuess.length === word.length) {
+        setGuessStatus("none");
       }
 
       return prevGuess.slice(0, -1);
@@ -62,7 +75,10 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
 
         if (newGuess.length === word.length) {
           checkGuess(newGuess);
+          return newGuess;
         }
+
+        setGuessStatus("none");
 
         return newGuess;
       });
@@ -112,7 +128,13 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
   }, [keyDownHandler, customInputHandler]);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={b(
+        styles,
+        "container",
+        guessStatus === "failure" ? "wrong-answer" : ""
+      )}
+    >
       {digits.map((digit, i) => {
         if (digit === null) {
           return <div className={styles.space} />;
