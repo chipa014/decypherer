@@ -129,11 +129,9 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
 
   return (
     <div
-      className={b(
-        styles,
-        "container",
-        guessStatus === "wrong" ? "wrong-answer" : ""
-      )}
+      className={b(styles, "container", {
+        "wrong-answer": guessStatus === "wrong",
+      })}
     >
       {digits.map((digit, i) => {
         if (digit === null) {

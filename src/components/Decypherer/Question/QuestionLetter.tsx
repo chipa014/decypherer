@@ -10,10 +10,13 @@ interface IQuestionLetterProps {
 const QuestionLetter: React.FC<IQuestionLetterProps> = ({ digit, letter }) => {
   const isRevealed = Boolean(letter);
   const highlightColor = lettersToDigits[letter] === digit ? "blue" : "red";
-  const highlightClass = isRevealed ? highlightColor : "";
 
   return (
-    <div className={b(styles, "container", highlightClass)}>
+    <div
+      className={b(styles, "container", {
+        [highlightColor]: isRevealed,
+      })}
+    >
       <h2 className={styles.letter}>
         {isRevealed ? letter.toUpperCase() : digit}
       </h2>

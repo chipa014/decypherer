@@ -1,4 +1,3 @@
-import b from "src/utils/b";
 import styles from "./SubKeyboard.module.css";
 import CloseButton from "../CloseButton";
 
@@ -17,7 +16,7 @@ const SubKeyboard: React.FC<ISubKeyboardProps> = function ({
     <div className={styles.container}>
       {letters.map((letter) => (
         <button
-          className={b(styles, "key")}
+          className={styles.key}
           onClick={onClick?.bind(null, letter)}
           key={letter}
         >
