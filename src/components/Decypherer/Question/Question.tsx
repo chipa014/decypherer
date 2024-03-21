@@ -18,9 +18,9 @@ interface IQuestionProps {
 
 const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
   const [currentGuess, setCurrentGuess] = useState("");
-  const [guessStatus, setGuessStatus] = useState<
-    "none" | "success" | "failure"
-  >("none");
+  const [guessStatus, setGuessStatus] = useState<"none" | "right" | "wrong">(
+    "none"
+  );
 
   const digits = useMemo(
     () =>
@@ -38,13 +38,13 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
     function (guess: string) {
       if (guess === word) {
         onSuccess();
-        setGuessStatus("success");
+        setGuessStatus("right");
         document.removeEventListener("keydown", keyDownHandler);
         document.removeEventListener("customInput", customInputHandler);
         return;
       }
 
-      setGuessStatus("failure");
+      setGuessStatus("wrong");
 
       return;
     },
@@ -132,7 +132,7 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
       className={b(
         styles,
         "container",
-        guessStatus === "failure" ? "wrong-answer" : ""
+        guessStatus === "wrong" ? "wrong-answer" : ""
       )}
     >
       {digits.map((digit, i) => {
