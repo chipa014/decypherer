@@ -17,6 +17,7 @@ interface IQuestionProps {
 }
 
 const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
+  const [interactive, setInteractive] = useState(true);
   const [currentGuess, setCurrentGuess] = useState("");
   const [guessStatus, setGuessStatus] = useState<"none" | "right" | "wrong">(
     "none"
@@ -34,36 +35,39 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
     [word]
   );
 
-  const checkGuess = useCallback(
+  const checkGuess: (guess: string) => void = useCallback(
     function (guess: string) {
+      if (guess !== word) {
+        setGuessStatus("wrong");
+
+        return;
+      }
       if (guess === word) {
         onSuccess();
         setGuessStatus("right");
-        document.removeEventListener("keydown", keyDownHandler);
-        document.removeEventListener("customInput", customInputHandler);
+        setInteractive(false);
         return;
       }
-
-      setGuessStatus("wrong");
-
-      return;
     },
     [word, onSuccess]
   );
 
-  const backspaceInputHandler = useCallback(function () {
-    setCurrentGuess((prevGuess) => {
-      if (!prevGuess) {
-        return prevGuess;
-      }
+  const backspaceInputHandler = useCallback(
+    function () {
+      setCurrentGuess((prevGuess) => {
+        if (!prevGuess) {
+          return prevGuess;
+        }
 
-      if (prevGuess.length === word.length) {
-        setGuessStatus("none");
-      }
+        if (prevGuess.length === word.length) {
+          setGuessStatus("none");
+        }
 
-      return prevGuess.slice(0, -1);
-    });
-  }, []);
+        return prevGuess.slice(0, -1);
+      });
+    },
+    [word]
+  );
 
   const letterInputHandler = useCallback(
     function (key: string) {
@@ -117,15 +121,23 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
     [backspaceInputHandler, letterInputHandler]
   );
 
+  const cleanEventListeners = useCallback(
+    function () {
+      document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener("customInput", customInputHandler);
+    },
+    [customInputHandler, keyDownHandler]
+  );
+
   useEffect(() => {
+    if (!interactive) {
+      return;
+    }
     document.addEventListener("keydown", keyDownHandler);
     document.addEventListener("customInput", customInputHandler);
 
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-      document.removeEventListener("customInput", customInputHandler);
-    };
-  }, [keyDownHandler, customInputHandler]);
+    return cleanEventListeners;
+  }, [cleanEventListeners, customInputHandler, interactive, keyDownHandler]);
 
   return (
     <div
