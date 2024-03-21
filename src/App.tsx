@@ -17,12 +17,16 @@ const App: React.FC = () => {
   }, []);
 
   const onShowModal = useCallback(function () {
-    setShowModal(true);
+    //Timeout helps avoid trying to rerender App while rendering Question
+    //instead delaying it until the next render cycle
+    setTimeout(() => {
+      setShowModal(true);
+    }, 0);
   }, []);
 
-  const onHideModal = function () {
+  const onHideModal = useCallback(function () {
     setShowModal(false);
-  };
+  }, []);
 
   return (
     <>
