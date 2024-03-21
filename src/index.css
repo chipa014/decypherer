@@ -1,4 +1,5 @@
-@import "./styles/colors.css";
+@import "src/styles/colors.css";
+@import "src/styles/transitions.css";
 
 * {
   margin: 0;

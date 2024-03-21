@@ -1,26 +1,57 @@
+import { useCallback, useRef } from "react";
+import { CSSTransition } from "react-transition-group";
+
+import { successAnimationDelay } from "src/consts/animations";
 import { lettersToDigits } from "src/consts/letter-digits";
 import b from "src/utils/b";
 import styles from "./QuestionLetter.module.css";
 
 interface IQuestionLetterProps {
+  animateSuccess: boolean;
   digit: number;
+  index: number;
   letter: string;
 }
 
-const QuestionLetter: React.FC<IQuestionLetterProps> = ({ digit, letter }) => {
+const QuestionLetter: React.FC<IQuestionLetterProps> = ({
+  animateSuccess,
+  digit,
+  index,
+  letter,
+}) => {
+  const letterRef = useRef(null);
   const isRevealed = Boolean(letter);
-  const highlightColor = lettersToDigits[letter] === digit ? "blue" : "red";
+
+  const determineColor = useCallback(() => {
+    if (animateSuccess) {
+      return "green";
+    }
+    if (lettersToDigits[letter] === digit) {
+      return "blue";
+    }
+    return "red";
+  }, [animateSuccess, letter, digit]);
+
+  const highlightColor = determineColor();
 
   return (
-    <div
-      className={b(styles, "container", {
-        [highlightColor]: isRevealed,
-      })}
+    <CSSTransition
+      nodeRef={letterRef}
+      in={animateSuccess}
+      timeout={index * successAnimationDelay}
+      classNames={{ ...styles }}
     >
-      <h2 className={styles.letter}>
-        {isRevealed ? letter.toUpperCase() : digit}
-      </h2>
-    </div>
+      <div
+        className={b(styles, "container", {
+          [highlightColor]: isRevealed,
+        })}
+        ref={letterRef}
+      >
+        <h2 className={styles.letter}>
+          {isRevealed ? letter.toUpperCase() : digit}
+        </h2>
+      </div>
+    </CSSTransition>
   );
 };
 

@@ -1,3 +1,5 @@
+@import "./VictoryModal.animations.css";
+
 .modal {
   height: 400px;
   width: 500px;
@@ -20,6 +22,22 @@
   align-items: center;
 }
 
+.modal-enter-active {
+  opacity: 0;
+}
+
+.modal-enter-done {
+  animation: fade-in var(--modal-fade-in), modal-pop-in var(--modal-pop-in);
+}
+
+.modal-exit {
+  opacity: 1;
+}
+
+.modal-exit-active {
+  animation: fade-out var(--modal-fade-in) both;
+}
+
 .text {
   font-size: 3.5rem;
   font-weight: 500;
@@ -35,4 +53,20 @@
 
   background-color: var(--color-veil);
   z-index: 1;
+}
+
+.veil-enter-active {
+  opacity: 0;
+}
+
+.veil-enter-done {
+  animation: fade-in var(--modal-fade-in);
+}
+
+.veil-exit {
+  opacity: 1;
+}
+
+.veil-exit-active {
+  animation: fade-out var(--modal-fade-in) var(--modal-fade-in) both;
 }

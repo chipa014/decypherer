@@ -43,9 +43,9 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
         return;
       }
       if (guess === word) {
-        onSuccess();
         setGuessStatus("right");
         setInteractive(false);
+        onSuccess();
         return;
       }
     },
@@ -81,8 +81,6 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
           checkGuess(newGuess);
           return newGuess;
         }
-
-        setGuessStatus("none");
 
         return newGuess;
       });
@@ -152,7 +150,9 @@ const Question: React.FC<IQuestionProps> = function ({ word, onSuccess }) {
 
         return (
           <QuestionLetter
+            animateSuccess={guessStatus === "right"}
             digit={digit}
+            index={i}
             letter={currentGuess[i] ?? null}
             key={i}
           />

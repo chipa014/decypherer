@@ -30,7 +30,11 @@ const App: React.FC = () => {
 
   return (
     <>
-      {showModal && <VictoryModal onClose={onHideModal} />}
+      <VictoryModal
+        onClose={onHideModal}
+        shown={showModal}
+        wordLength={word.length}
+      />
       <div className={styles.container}>
         <Keyboard />
         <Question word={word} onSuccess={onShowModal} />

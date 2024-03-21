@@ -1,0 +1,4 @@
+body {
+  --modal-fade-in: 0.2s; /* check with src/consts/animtions.ts closeModalAnimation*/
+  --modal-pop-in: 0.6s;
+}
