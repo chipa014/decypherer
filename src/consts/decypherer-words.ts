@@ -19,11 +19,7 @@ export const decyphererWords = [
   "apricot",
   "avocado",
   "mango",
-  "grapefruit",
-  "pineapple",
-  "tangerine",
   "lemon",
   "melon",
   "papaya",
-  "pomegranate",
 ];
